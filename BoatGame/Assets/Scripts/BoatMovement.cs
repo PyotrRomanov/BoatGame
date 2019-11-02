@@ -1,10 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using InControl;
 
 public class BoatMovement : MonoBehaviour
 {
-
+    BoatActions boatActions;
     public float speed = 0;
     public float rot = 0;
 
@@ -18,7 +19,8 @@ public class BoatMovement : MonoBehaviour
     float paddleSpeed = 1f;
 
     [SerializeField]
-    float resistance = 0.05f;
+    float rotResistance;
+    float speedResistance = 0.5f;
 
     [SerializeField]
     PaddleAnimation leftPaddle;
@@ -28,7 +30,7 @@ public class BoatMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        BindControls();
     }
 
     // Update is called once per frame
@@ -51,58 +53,65 @@ public class BoatMovement : MonoBehaviour
     {
         if(rot > 0)
         {
-            rot -= resistance;
-        }
-        if(rot < 0)
+            rot -= rotResistance * Time.deltaTime;
+        }else if(rot < 0)
         {
-            rot += resistance;
+            rot += rotResistance * Time.deltaTime;
         }
-        if(rot < 1 && rot > -1)
+        if(rot < 0.2f && rot > -0.2f)
         {
             rot = 0;
         }
 
-        /*if(speed > 0){
-            speed -= resistance;
+        if(speed > 0){
+            speed -= speedResistance * Time.deltaTime;
         }else if(speed < 0){
-            speed += resistance;
-        }*/
+            speed += speedResistance * Time.deltaTime;
+        }
     }
 
     void HandleControls()
     {
-        leftPaddle.submerged = true;
-        rightPaddle.submerged = true;
+        InputDevice inputDevice = InputManager.ActiveDevice;
 
-       if(Input.GetKey("e"))
+       if(boatActions.LeftPaddleUp)
        {
            l = Mathf.Clamp(l + paddleSpeed * Time.deltaTime, 0, 1);
        } 
 
-       if(Input.GetKey("c"))
+       if(boatActions.LeftPaddleDown)
        {
            l = Mathf.Clamp(l - paddleSpeed * Time.deltaTime, 0, 1);
        }
 
-       if(Input.GetKey("d"))
+       if(boatActions.LeftPaddleUnsubmerge.WasPressed)
        {
-           leftPaddle.submerged = false;
+           leftPaddle.Unsubmerge();
+       }
+       if(boatActions.LeftPaddleUnsubmerge.WasReleased)
+       {
+           leftPaddle.Submerge();
        }
 
-       if(Input.GetKey("i"))
+       if(boatActions.RightPaddleUp)
        {
            r = Mathf.Clamp(r + paddleSpeed * Time.deltaTime, 0, 1);
        } 
 
-       if(Input.GetKey("n"))
+       if(boatActions.RightPaddleDown)
        {
            r = Mathf.Clamp(r - paddleSpeed * Time.deltaTime, 0, 1);
        }
 
-       if(Input.GetKey("j"))
+       if(boatActions.RightPaddleUnsubmerge.WasPressed)
        {
-           rightPaddle.submerged = false;
+           rightPaddle.Unsubmerge();
        }
+       if(boatActions.RightPaddleUnsubmerge.WasReleased)
+       {
+           rightPaddle.Submerge();
+       }
+
 
     }
 
@@ -110,17 +119,41 @@ public class BoatMovement : MonoBehaviour
     {
         float deltaL = lastL - l;
         float deltaR = lastR - r;
+        Debug.Log(rightPaddle.submerged);
 
         if(rightPaddle.submerged){
             speed += deltaR * Time.deltaTime * 100;
-            rot += deltaR * 10;
+            rot += deltaR * Time.deltaTime * 1000;
         }
         if(leftPaddle.submerged){
             speed += deltaL * Time.deltaTime * 100;
-            rot -= deltaL * 10;
+            rot -= deltaL * Time.deltaTime * 1000;
         }
         
         lastL = l;
         lastR = r;
+    }
+
+    void BindControls()
+    {
+        boatActions = new BoatActions();
+
+        // Setup keyboard controls
+        boatActions.RightPaddleUp.AddDefaultBinding(Key.I);
+        boatActions.RightPaddleDown.AddDefaultBinding(Key.N);
+        boatActions.RightPaddleUnsubmerge.AddDefaultBinding(Key.J);
+
+        boatActions.LeftPaddleUp.AddDefaultBinding(Key.E);
+        boatActions.LeftPaddleDown.AddDefaultBinding(Key.C);
+        boatActions.LeftPaddleUnsubmerge.AddDefaultBinding(Key.D);
+
+        // Setup gamepad controls
+        boatActions.RightPaddleUp.AddDefaultBinding(InputControlType.RightTrigger);
+        boatActions.RightPaddleDown.AddDefaultBinding(InputControlType.RightBumper);
+        boatActions.RightPaddleUnsubmerge.AddDefaultBinding(InputControlType.Action1);
+
+        boatActions.LeftPaddleUp.AddDefaultBinding(InputControlType.LeftTrigger);
+        boatActions.LeftPaddleDown.AddDefaultBinding(InputControlType.LeftBumper);
+        boatActions.LeftPaddleUnsubmerge.AddDefaultBinding(InputControlType.DPadDown);
     }
 }
