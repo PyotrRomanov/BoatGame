@@ -32,8 +32,9 @@ public class TrailSpawner : MonoBehaviour
         {
             Transform newDot = Instantiate(dot).transform;
             newDot.transform.position = transform.position;
-            newDot.GetComponent<TrailEffect>().dir = dir * boatMovement.speed;
+            newDot.GetComponent<TrailEffect>().dir = new Vector2(dir * boatMovement.speed, 0);
             newDot.GetComponent<TrailEffect>().spawnPoint = transform;
+            newDot.GetComponent<TrailEffect>().ttl = 4f;
         }
 
     }

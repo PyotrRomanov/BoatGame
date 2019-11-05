@@ -38,7 +38,7 @@ public class BoatMovement : MonoBehaviour
     {
         transform.Rotate(0, 0, rot * Time.deltaTime, Space.Self);
         transform.Translate(0, speed * Time.deltaTime, 0, Space.Self);
-
+        //GetComponent<Rigidbody2D>().velocity = new Vector2(0, -1);
         HandleControls();
 
         MovementLogic();
@@ -119,7 +119,6 @@ public class BoatMovement : MonoBehaviour
     {
         float deltaL = lastL - l;
         float deltaR = lastR - r;
-        Debug.Log(rightPaddle.submerged);
 
         if(rightPaddle.submerged){
             speed += deltaR * Time.deltaTime * 100;

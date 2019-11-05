@@ -12,29 +12,32 @@ public class PaddleAnimation : MonoBehaviour
     float side;
 
     Transform pivot;
-    // Start is called before the first frame update
+
+    [SerializeField]
+    GameObject circle;
+    
     void Start()
     {
         pivot = transform.parent;
         submerged = true;
     }
 
-    // Update is called once per frame
     void Update()
     {
         pivot.localRotation = Quaternion.Euler(0, pivot.localEulerAngles.y, HelperMethods.Map(rotation, 0, 1, -70, 70) * side);
-        
     }
 
     public void Submerge()
     {
         submerged = true;
         pivot.localRotation = Quaternion.Euler(0, 45, pivot.localEulerAngles.z);
+        circle.SetActive(true);
     }
 
     public void Unsubmerge()
     {
         submerged = false;
         pivot.localRotation = Quaternion.Euler(0, 0, pivot.localEulerAngles.z);
+        circle.SetActive(false);
     }
 }
