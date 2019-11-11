@@ -18,14 +18,14 @@ TagManager:
   - 
   - 
   - 
+  - Underwater
   - 
   - 
   - 
+  - Beach
   - 
   - 
-  - 
-  - 
-  - 
+  - Abovewater
   - 
   - 
   - 
@@ -40,4 +40,7 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: New Layer
+    uniqueID: 3332088367
     locked: 0
