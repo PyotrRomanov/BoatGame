@@ -12,6 +12,7 @@ public class BoatMovement : MonoBehaviour
     [SerializeField]
     float r = 0;
     float lastR = 0;
+
     [SerializeField]
     float l = 0;
     float lastL = 0;
@@ -26,6 +27,8 @@ public class BoatMovement : MonoBehaviour
     PaddleAnimation leftPaddle;
     [SerializeField]
     PaddleAnimation rightPaddle;
+
+    List<TriggerEffect> currentlyAffectingTriggers = new List<TriggerEffect>();
 
     // Start is called before the first frame update
     void Start()
@@ -45,7 +48,27 @@ public class BoatMovement : MonoBehaviour
         leftPaddle.rotation = l;
         rightPaddle.rotation = r;
 
+        HandleTriggerEffects();
+
         HandleResistance();
+    }
+
+    private void OnTriggerEnter2D(Collider2D other) {
+        if(other.gameObject.name == "Vortex")
+        {
+            currentlyAffectingTriggers.Add(other.gameObject.GetComponent<VortexTriggerEffect>());
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D other) {
+        if(other.gameObject.name == "Vortex")
+        {
+            currentlyAffectingTriggers.Remove(other.gameObject.GetComponent<VortexTriggerEffect>());
+        }
+    }
+
+    private void OnCollisionEnter2D(Collision2D other) {
+        speed = 0;
     }
 
     void HandleResistance()
@@ -153,5 +176,13 @@ public class BoatMovement : MonoBehaviour
         boatActions.LeftPaddleUp.AddDefaultBinding(InputControlType.LeftTrigger);
         boatActions.LeftPaddleDown.AddDefaultBinding(InputControlType.LeftBumper);
         boatActions.LeftPaddleUnsubmerge.AddDefaultBinding(InputControlType.DPadDown);
+    }
+
+    void HandleTriggerEffects()
+    {
+        foreach(TriggerEffect te in currentlyAffectingTriggers)
+        {
+            te.Effect(this);
+        }
     }
 }

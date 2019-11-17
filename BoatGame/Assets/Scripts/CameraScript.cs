@@ -21,7 +21,7 @@ public class CameraScript : MonoBehaviour
     {
         zoomoutValue = Mathf.Lerp(zoomoutValue, 0.5f * Mathf.Abs(boatMovement.speed), 0.5f * Time.deltaTime);
         Camera.main.orthographicSize = 3.6f + zoomoutValue;
-        float y = Mathf.Clamp(boatMovement.transform.position.y, -1.36f, 10f);
+        float y = Mathf.Clamp(boatMovement.transform.position.y, -4.9f + Camera.main.orthographicSize, 10f);
         transform.position = new Vector3(transform.position.x, y, transform.position.z);
     }
 }
