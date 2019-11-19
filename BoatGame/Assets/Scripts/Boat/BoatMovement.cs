@@ -54,17 +54,12 @@ public class BoatMovement : MonoBehaviour
     }
 
     private void OnTriggerEnter2D(Collider2D other) {
-        if(other.gameObject.name == "Vortex")
-        {
-            currentlyAffectingTriggers.Add(other.gameObject.GetComponent<VortexTriggerEffect>());
-        }
+        currentlyAffectingTriggers.Add(other.gameObject.GetComponent<TriggerEffect>());
     }
 
     private void OnTriggerExit2D(Collider2D other) {
-        if(other.gameObject.name == "Vortex")
-        {
-            currentlyAffectingTriggers.Remove(other.gameObject.GetComponent<VortexTriggerEffect>());
-        }
+        
+        currentlyAffectingTriggers.Remove(other.gameObject.GetComponent<TriggerEffect>());
     }
 
     private void OnCollisionEnter2D(Collision2D other) {
