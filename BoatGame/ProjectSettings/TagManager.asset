@@ -47,3 +47,6 @@ TagManager:
   - name: ParticleLayer
     uniqueID: 722040101
     locked: 0
+  - name: InterfaceLayer
+    uniqueID: 143994217
+    locked: 0

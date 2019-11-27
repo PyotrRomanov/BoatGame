@@ -19,9 +19,15 @@ public class CameraScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        HandleCameraMovement();
+    }
+
+    ///<summary>Zooms the camera out depending on the speed of the boat</summary>
+    void HandleCameraMovement()
+    {
         zoomoutValue = Mathf.Lerp(zoomoutValue, 0.5f * Mathf.Abs(boatMovement.speed), 0.5f * Time.deltaTime);
         Camera.main.orthographicSize = 3.6f + zoomoutValue;
-        float y = Mathf.Clamp(boatMovement.transform.position.y, -4.9f + Camera.main.orthographicSize, 10f);
+        float y = Mathf.Clamp(boatMovement.transform.position.y, -4.9f + Camera.main.orthographicSize, 100f);
         transform.position = new Vector3(transform.position.x, y, transform.position.z);
     }
 }
