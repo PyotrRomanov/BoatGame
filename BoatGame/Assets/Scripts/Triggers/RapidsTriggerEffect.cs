@@ -4,26 +4,31 @@ using UnityEngine;
 
 public class RapidsTriggerEffect : TriggerEffect
 {
+    [SerializeField]
+    float strength;
+
     public override void Effect(BoatMovement boat)
     {
         float angle;
         float currentAngle = HelperMethods.PositiveAngle(boat.transform.rotation.eulerAngles.z);
+        float rapidsAngle = HelperMethods.PositiveAngle(transform.rotation.eulerAngles.z);
 
         // Two angles: 0 for up and 180 for down
-        float upDistance = Mathf.Abs(Mathf.DeltaAngle(currentAngle, 0));
-        float downDistance = Mathf.Abs(Mathf.DeltaAngle(currentAngle, 180));
+        float upDistance = Mathf.Abs(Mathf.DeltaAngle(currentAngle, rapidsAngle));
+        float downDistance = Mathf.Abs(Mathf.DeltaAngle(currentAngle, rapidsAngle + 180));
 
         // Determine which way the boat should face
         if(upDistance > downDistance)
         {
-            angle = 180;
+            angle = rapidsAngle + 180;
         }else
         {
-            angle = 0;
+            angle = rapidsAngle;
         }
 
         // Make sure there is a significant distance between current angle and goal angle
-        if(Mathf.Abs(Mathf.DeltaAngle(angle, currentAngle)) > 1)
+        float deltaAngle = Mathf.Abs(Mathf.DeltaAngle(angle, currentAngle));
+        if(deltaAngle > 1)
         {
             // Determine which direction is the fastest to turn in to reach said angle
             float angleDir = Mathf.Sin((currentAngle - angle) * Mathf.Deg2Rad);
@@ -39,6 +44,15 @@ public class RapidsTriggerEffect : TriggerEffect
             {
                 boat.rot = 0;
             }
+        }
+        
+        // Add speed to boat in the right direction, depending on how much the boat is facing in that direction
+        if(upDistance > downDistance)
+        {
+            boat.speed -= strength * (90 - deltaAngle)/90 * Time.deltaTime;
+        }else
+        {
+            boat.speed += strength * (90 - deltaAngle)/90 * Time.deltaTime;
         }
     }
 }
