@@ -7,6 +7,12 @@ public class RapidsTriggerEffect : TriggerEffect
     [SerializeField]
     float strength;
 
+    public void Start()
+    {
+        ParticleSystem.MainModule main = transform.Find("Particles").GetComponent<ParticleSystem>().main;
+        main.startSpeed = strength * 2;
+    }
+
     public override void Effect(BoatMovement boat)
     {
         float angle;
@@ -34,11 +40,11 @@ public class RapidsTriggerEffect : TriggerEffect
             float angleDir = Mathf.Sin((currentAngle - angle) * Mathf.Deg2Rad);
             if(angleDir < 0)
             {
-                boat.transform.Rotate(0, 0, (10 * Time.deltaTime) );
+                boat.transform.Rotate(0, 0, strength * (10 * Time.deltaTime) );
                 //Debug.Log("Turning left");
             }else if(angleDir > 0)
             {
-                boat.transform.Rotate(0, 0, -(10 * Time.deltaTime));
+                boat.transform.Rotate(0, 0, strength * -(10 * Time.deltaTime));
                 //Debug.Log("Turning right");
             }else
             {
