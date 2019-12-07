@@ -11,6 +11,9 @@ public class TutorialScreenScript : MonoBehaviour
     [SerializeField]
     GameObject blackScreen;
 
+    [SerializeField]
+    SoundManager soundManager;
+
     BoatActions action;
 
     void Awake()
@@ -40,6 +43,7 @@ public class TutorialScreenScript : MonoBehaviour
     {
         GetComponent<SpriteRenderer>().material.DOFade(0, 2);
         yield return new WaitForSeconds(2);
+        soundManager.StartPlayingBGM();
         boat.SetActive(true);
         gameObject.SetActive(false);
         blackScreen.GetComponent<SpriteRenderer>().material.DOFade(0, 3);
