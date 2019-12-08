@@ -5,13 +5,17 @@ using UnityEngine;
 public class SoundManager : MonoBehaviour
 {
     AudioSource bgm;
-    AudioSource[] notes;
+    
+    [SerializeField]
+    AudioClip[] notes = new AudioClip[10];
 
     // Start is called before the first frame update
     void Start()
     {
         bgm = GetComponent<AudioSource>();
-        notes = transform.GetChild(0).GetComponents<AudioSource>();
+        //notes = transform.GetChild(0).GetComponents<AudioSource>();
+        
+
     }
 
     // Update is called once per frame
@@ -27,6 +31,19 @@ public class SoundManager : MonoBehaviour
 
     public void PlayNote()
     {
-        notes[0].Play(0);
+        
+        StartCoroutine(PlayNoteFunction());
+    }
+
+    IEnumerator PlayNoteFunction()
+    {
+        AudioSource src = gameObject.AddComponent<AudioSource>();
+        src.clip = notes[Random.Range(0, 9)];
+        
+        src.time = 0.5f;
+        src.volume = 0.3f;
+        src.Play();
+        yield return new WaitForSeconds(3f);
+        Destroy(src);
     }
 }

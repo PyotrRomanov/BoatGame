@@ -33,7 +33,7 @@ public class DripEffect : MonoBehaviour
         newSplash.GetComponent<CircleEffect>().startScale = new Vector3(0.2f, 0.2f, 1);
         newSplash.GetComponent<CircleEffect>().endScale = new Vector3(0.8f, 0.8f, 1);
         newSplash.GetComponent<CircleEffect>().ttl = 2;
-        //soundManager.PlayNote();
+        soundManager.PlayNote();
         Destroy(gameObject, ttl);
     }
 }
