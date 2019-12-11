@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2200156307560395262}
   - component: {fileID: 6568349490642313774}
   m_Layer: 0
-  m_Name: dot
+  m_Name: TrailParticle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -66,8 +66,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 722040101
+  m_SortingLayer: -2
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 67e028b6b7b8430478538abef3b0c069, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -92,4 +92,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1731d75ec623491478cd12e6e34d0d15, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dir: 0
+  dir: {x: 0, y: 0}
+  ttl: 0
+  spawnPoint: {fileID: 0}
+  fadeValue: 0

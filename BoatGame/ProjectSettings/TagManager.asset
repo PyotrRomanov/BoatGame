@@ -38,14 +38,14 @@ TagManager:
   - 
   - 
   m_SortingLayers:
-  - name: Default
-    uniqueID: 0
-    locked: 0
-  - name: New Layer
-    uniqueID: 3332088367
-    locked: 0
   - name: ParticleLayer
     uniqueID: 722040101
+    locked: 0
+  - name: GameLayer
+    uniqueID: 3332088367
+    locked: 0
+  - name: Default
+    uniqueID: 0
     locked: 0
   - name: InterfaceLayer
     uniqueID: 143994217
