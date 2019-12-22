@@ -47,6 +47,9 @@ TagManager:
   - name: GameLayer
     uniqueID: 3332088367
     locked: 0
+  - name: ForegroundLayer
+    uniqueID: 4181173635
+    locked: 0
   - name: InterfaceLayer
     uniqueID: 143994217
     locked: 0
