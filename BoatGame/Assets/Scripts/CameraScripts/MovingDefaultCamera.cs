@@ -11,10 +11,10 @@ public class MovingDefaultCamera : CameraBehaviour
 
     public override void DoCameraBehaviour(Transform camera, BoatMovement boat)
     {
-        base.zoomoutValue = Mathf.Lerp(zoomoutValue, 0.5f * Mathf.Abs(boat.speed), 0.5f * Time.deltaTime);
+        base.zoomoutValue = Mathf.Lerp(zoomoutValue, 0.2f * Mathf.Abs(boat.speed), 0.5f * Time.deltaTime);
         Camera.main.orthographicSize = 3.6f + zoomoutValue;
         float x = Mathf.Lerp(camera.position.x, 0.3f, 0.5f * Time.deltaTime);
-        float y = Mathf.Clamp(boat.transform.position.y, -4.9f + Camera.main.orthographicSize, 3000f);
+        float y = Mathf.Clamp(boat.transform.position.y, -4.9f + Camera.main.orthographicSize, 300f);
         camera.position = new Vector3(x, y, camera.position.z);
     }
 }
